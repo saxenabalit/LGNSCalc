@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>LGNS Investment Calculator</title>
+<meta name="theme-color" content="#eef2ff" />
+<meta name="description" content="LGNS Dynamic Compound Investment Calculator" />
+
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 3 7 3 17 12 22 21 17 21 7 12 2"/><polyline points="8 12 11 15 16 9"/></svg>
+    </span>
+    <span class="brand-text">
+      <h1><span class="brand-white">LGNS</span> <span class="brand-accent">Investment Calculator</span></h1>
+      <p>Compound &bull; Grow &bull; Build Your Future</p>
+    </span>
+  </div>
+  <div class="tagline">
+    <span>Small steps today&hellip;<br />Big rewards tomorrow</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+  </div>
+</header>
+
+<main class="dashboard">
+
+  <form id="calc-form">
+
+  <div class="top-grid">
+
+    <!-- ============== INVESTMENT DETAILS ============== -->
+    <section class="card investment-card">
+      <h2><span class="card-icon icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Investment Details</h2>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <label for="investmentDate"><span class="field-icon icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Investment Date</label>
+          <input type="date" id="investmentDate" />
+        </div>
+
+        <div class="field">
+          <label for="quantity"><span class="field-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Tokens to Stake</label>
+          <div class="input-suffix">
+            <input type="number" id="quantity" step="any" inputmode="decimal" placeholder="1000" />
+            <span class="suffix">TOKENS</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="price"><span class="field-icon icon-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Token Price (USD)</label>
+          <div class="input-suffix">
+            <input type="number" id="price" step="any" inputmode="decimal" placeholder="1" />
+            <span class="suffix">USD</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="rate"><span class="field-icon icon-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></span>Rate per Cycle</label>
+          <div class="input-suffix">
+            <input type="number" id="rate" step="any" inputmode="decimal" placeholder="0.14" />
+            <span class="suffix">%</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="usdInr"><span class="field-icon icon-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span>USD to INR Rate</label>
+          <div class="input-suffix">
+            <input type="number" id="usdInr" step="any" inputmode="decimal" placeholder="100" />
+            <span class="suffix">&#8377;</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="salesTax"><span class="field-icon icon-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Sales Tax on Withdrawal</label>
+          <div class="input-suffix">
+            <input type="number" id="salesTax" step="any" inputmode="decimal" placeholder="40" />
+            <span class="suffix">%</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="withdrawPercent"><span class="field-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg></span>Withdraw Percentage</label>
+          <div class="input-suffix">
+            <input type="number" id="withdrawPercent" step="any" inputmode="decimal" placeholder="50" />
+            <span class="suffix">%</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="withdrawStart"><span class="field-icon icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></span>Withdraw Starts at Period</label>
+          <input type="number" id="withdrawStart" step="1" inputmode="numeric" placeholder="1" />
+        </div>
+
+      </div>
+
+      <div class="sub-row">
+        <div class="field">
+          <label><span class="field-icon icon-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>Time Period</label>
+          <div class="pill-toggle">
+            <label class="pill"><input type="radio" name="timeUnit" value="M" checked /><span>Months</span></label>
+            <label class="pill"><input type="radio" name="timeUnit" value="Y" /><span>Years</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="duration"><span class="field-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Duration</label>
+          <div class="input-suffix">
+            <input type="number" id="duration" step="1" inputmode="numeric" placeholder="12" />
+            <span class="suffix" id="durationUnitLabel">Months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-select">
+        <label><span class="field-icon icon-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>Quick Select</label>
+        <div class="quick-buttons">
+          <button type="button" class="quick-btn" data-duration="6" data-unit="M">6M</button>
+          <button type="button" class="quick-btn active" data-duration="12" data-unit="M">12M</button>
+          <button type="button" class="quick-btn" data-duration="24" data-unit="M">24M</button>
+          <button type="button" class="quick-btn" data-duration="3" data-unit="Y">3Y</button>
+          <button type="button" class="quick-btn" data-duration="5" data-unit="Y">5Y</button>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button type="button" id="resetBtn" class="btn btn-outline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Clear
+        </button>
+        <button type="submit" id="calcBtn" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg>
+          Calculate
+        </button>
+      </div>
+    </section>
+
+    <!-- ============== RIGHT COLUMN: SUMMARY ============== -->
+    <section class="right-column">
+
+      <div class="summary-header">
+        <span class="card-icon icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span>
+        <h2>Summary</h2>
+      </div>
+
+      <div class="summary-cards" id="summary-cards">
+        <div class="summary-card summary-blue">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          <span class="summary-title">Final Token Closing</span>
+          <span class="summary-value" id="cardFinalBalance">&ndash;</span>
+          <span class="summary-sub">Tokens</span>
+        </div>
+        <div class="summary-card summary-green">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+          <span class="summary-title">Final USD Value</span>
+          <span class="summary-value" id="cardFinalUsd">&ndash;</span>
+          <span class="summary-sub" id="cardFinalUsdSub">&nbsp;</span>
+        </div>
+        <div class="summary-card summary-purple">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
+          <span class="summary-title">Growth Multiplier</span>
+          <span class="summary-value" id="cardGrowth">&ndash;</span>
+          <span class="summary-sub" id="cardGrowthSub">&nbsp;</span>
+        </div>
+        <div class="summary-card summary-amber">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg></span>
+          <span class="summary-title">Total Withdrawn</span>
+          <span class="summary-value" id="cardWithdrawn">&ndash;</span>
+          <span class="summary-sub">INR (Cumulative)</span>
+        </div>
+      </div>
+
+      <div class="details-grid">
+        <div class="card">
+          <h3><span class="card-icon icon-blue small"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="18" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="13" y2="18"/></svg></span>Key Details</h3>
+          <div class="details-list" id="keyDetailsList"></div>
+        </div>
+
+        <div class="card">
+          <h3><span class="card-icon icon-amber small"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span>How It Works</h3>
+          <p class="how-text">
+            Compounds every cycle (4 cycles/day &mdash; 120/month or 1,460/year). Each period
+            builds on the previous period's <strong>Token Closing</strong> (after that
+            period's withdrawal). From your configured start period, <strong>Withdraw %</strong>
+            of the tokens added each period is withdrawn, converted to USD net of
+            <strong>Sales Tax</strong>, then to INR.
+          </p>
+          <div class="formula-box">
+            <div class="formula">A = P &times; (1 + r)<sup>n</sup></div>
+            <div class="formula-legend">
+              <span><b>A</b> = Final amount</span>
+              <span><b>P</b> = Principal (opening balance)</span>
+              <span><b>r</b> = Rate per cycle (decimal)</span>
+              <span><b>n</b> = Cycles this period</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <p id="error-box" class="error-box" hidden></p>
+
+  <!-- ============== BOTTOM: TABLE + CHART ============== -->
+  <div class="bottom-grid" id="report-card" hidden>
+
+    <section class="card table-card">
+      <h2><span class="card-icon icon-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Projection Table</h2>
+      <div class="table-scroll">
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>Period #</th>
+              <th>Date</th>
+              <th>Total Cycles</th>
+              <th>Token Balance</th>
+              <th>Tokens Added</th>
+              <th>Tokens Withdrawn</th>
+              <th>Token Closing</th>
+              <th>Withdraw USD</th>
+              <th>Withdraw INR</th>
+              <th>Withdraw INR (Cum.)</th>
+              <th>USD Value</th>
+              <th>INR Value</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card chart-card">
+      <div class="chart-header">
+        <h2><span class="card-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> Balance Growth</h2>
+        <div class="chart-toggle">
+          <button type="button" class="chart-toggle-btn active" data-series="closing">Token Closing</button>
+          <button type="button" class="chart-toggle-btn" data-series="usd">USD Value</button>
+        </div>
+      </div>
+      <div id="chart-container" class="chart-container"></div>
+    </section>
+
+  </div>
+
+  <div class="footer-actions">
+    <button type="button" id="exportBtn" class="btn btn-outline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export to Excel
+    </button>
+    <span class="footer-tagline">&#127793; Your LGNS journey is a step towards <u>financial freedom</u></span>
+  </div>
+
+  </form>
+
+</main>
+
+<script src="libs/xlsx.full.min.js"></script>
+<script src="calc-core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
