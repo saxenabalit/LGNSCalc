@@ -59,11 +59,12 @@ const errorBox = document.getElementById("error-box");
 const reportCard = document.getElementById("report-card");
 const resultsBody = document.getElementById("results-body");
 const chartContainer = document.getElementById("chart-container");
-const durationUnitLabel = document.getElementById("durationUnitLabel");
 
 let lastSummaryItems = [];
 let lastExportRows = [];
 let activeChartSeries = "closing";
+let selectedDuration = DEFAULTS.duration;
+let selectedTimeUnit = "M";
 
 function showError(message) {
   errorBox.textContent = `\u274c ${message}`;
@@ -85,50 +86,29 @@ function applyDefaults() {
   document.getElementById("salesTax").value = DEFAULTS.salesTaxPercent;
   document.getElementById("withdrawPercent").value = DEFAULTS.withdrawPercent;
   document.getElementById("withdrawStart").value = DEFAULTS.withdrawStartPeriod;
-  document.getElementById("duration").value = DEFAULTS.duration;
-  form.querySelector('input[name="timeUnit"][value="M"]').checked = true;
-  updateDurationUnitLabel();
-  setActiveQuickSelect(12, "M");
-}
-
-function updateDurationUnitLabel() {
-  const timeUnit = form.querySelector('input[name="timeUnit"]:checked').value;
-  durationUnitLabel.textContent = timeUnit === "Y" ? "Years" : "Months";
+  selectedDuration = DEFAULTS.duration;
+  selectedTimeUnit = "M";
+  setActiveQuickSelect(selectedDuration, selectedTimeUnit);
 }
 
 // ------------------------------------------------------------------
-// Quick select (6M / 12M / 24M / 3Y / 5Y)
+// Duration Quick Select (6M / 12M / 24M / 3Y / 5Y)
 // ------------------------------------------------------------------
 const quickButtons = Array.from(document.querySelectorAll(".quick-btn"));
 
 function setActiveQuickSelect(duration, unit) {
+  selectedDuration = duration;
+  selectedTimeUnit = unit;
   quickButtons.forEach((btn) => {
     const matches = Number(btn.dataset.duration) === duration && btn.dataset.unit === unit;
     btn.classList.toggle("active", matches);
   });
 }
 
-function clearActiveQuickSelect() {
-  quickButtons.forEach((btn) => btn.classList.remove("active"));
-}
-
 quickButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    const duration = Number(btn.dataset.duration);
-    const unit = btn.dataset.unit;
-    document.getElementById("duration").value = duration;
-    form.querySelector(`input[name="timeUnit"][value="${unit}"]`).checked = true;
-    updateDurationUnitLabel();
-    setActiveQuickSelect(duration, unit);
+    setActiveQuickSelect(Number(btn.dataset.duration), btn.dataset.unit);
     form.requestSubmit();
-  });
-});
-
-document.getElementById("duration").addEventListener("input", clearActiveQuickSelect);
-form.querySelectorAll('input[name="timeUnit"]').forEach((radio) => {
-  radio.addEventListener("change", () => {
-    updateDurationUnitLabel();
-    clearActiveQuickSelect();
   });
 });
 
@@ -326,8 +306,8 @@ form.addEventListener("submit", (event) => {
     const salesTaxPercent = cleanNumberInput(document.getElementById("salesTax")) ?? DEFAULTS.salesTaxPercent;
     const withdrawPercent = cleanNumberInput(document.getElementById("withdrawPercent")) ?? DEFAULTS.withdrawPercent;
     const withdrawStartPeriod = cleanNumberInput(document.getElementById("withdrawStart")) ?? DEFAULTS.withdrawStartPeriod;
-    const duration = cleanNumberInput(document.getElementById("duration")) ?? DEFAULTS.duration;
-    const timeUnit = form.querySelector('input[name="timeUnit"]:checked').value;
+    const duration = selectedDuration;
+    const timeUnit = selectedTimeUnit;
 
     if (principal < 0) throw new Error("LGNS token quantity cannot be negative.");
     if (tokenPrice < 0) throw new Error("LGNS token price cannot be negative.");
@@ -465,7 +445,7 @@ exportBtn.addEventListener("click", () => {
 // ------------------------------------------------------------------
 applyDefaults();
 
-const APP_VERSION = "4";
+const APP_VERSION = "5";
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
