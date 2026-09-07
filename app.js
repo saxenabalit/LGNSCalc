@@ -135,24 +135,29 @@ form.querySelectorAll('input[name="timeUnit"]').forEach((radio) => {
 // ------------------------------------------------------------------
 // Rendering
 // ------------------------------------------------------------------
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
 function renderSummaryCards(rows, principal, tokenPrice, usdInrRate) {
   const lastRow = rows[rows.length - 1];
   const [, , , , , , tokenClosing, , , cumulativeWithdrawalInr, endingUsdValue, endingInrValue] = lastRow;
 
-  document.getElementById("cardFinalBalance").textContent = fmt(tokenClosing);
-  document.getElementById("cardFinalUsd").textContent = `$${fmt(endingUsdValue)}`;
-  document.getElementById("cardFinalUsdSub").textContent = `(at $${fmt(tokenPrice, 4)})`;
-  document.getElementById("cardFinalInr").textContent = `\u20b9${fmt(endingInrValue)}`;
-  document.getElementById("cardFinalInrSub").textContent = `(at \u20b9${fmt(usdInrRate)})`;
+  setText("cardFinalBalance", fmt(tokenClosing));
+  setText("cardFinalUsd", `$${fmt(endingUsdValue)}`);
+  setText("cardFinalUsdSub", `(at $${fmt(tokenPrice, 4)})`);
+  setText("cardFinalInr", `\u20b9${fmt(endingInrValue)}`);
+  setText("cardFinalInrSub", `(at \u20b9${fmt(usdInrRate)})`);
 
   const multiplier = principal > 0 ? tokenClosing / principal : 0;
-  document.getElementById("cardGrowth").textContent = `${fmt(multiplier)}x`;
-  document.getElementById("cardGrowthSub").textContent = `(vs. initial ${fmt(principal, 0)} tokens)`;
-
-  document.getElementById("cardWithdrawn").textContent = `\u20b9${fmt(cumulativeWithdrawalInr)}`;
+  setText("cardGrowth", `${fmt(multiplier)}x`);
+  setText("cardGrowthSub", `(vs. initial ${fmt(principal, 0)} tokens)`);
+  setText("cardWithdrawn", `\u20b9${fmt(cumulativeWithdrawalInr)}`);
 }
 
 function renderTable(rows) {
+  if (!resultsBody) return;
   resultsBody.innerHTML = "";
   const finalPeriod = rows.length;
   for (const row of rows) {
@@ -206,6 +211,7 @@ function niceMax(value) {
 }
 
 function renderChart(rows, seriesKey) {
+  if (!chartContainer) return;
   chartContainer.innerHTML = "";
 
   if (!rows.length) {
@@ -459,13 +465,28 @@ exportBtn.addEventListener("click", () => {
 // ------------------------------------------------------------------
 applyDefaults();
 
+const APP_VERSION = "4";
+
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("service-worker.js", { updateViaCache: "none" })
-      .then((registration) => registration.update())
-      .catch(() => {
-        /* offline support is a nice-to-have; ignore registration failures */
-      });
+  window.addEventListener("load", async () => {
+    try {
+      if (localStorage.getItem("lgns-app-version") !== APP_VERSION) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(registrations.map((registration) => registration.unregister()));
+        if (window.caches) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((key) => caches.delete(key)));
+        }
+        localStorage.setItem("lgns-app-version", APP_VERSION);
+        window.location.reload();
+        return;
+      }
+
+      navigator.serviceWorker
+        .register("service-worker.js", { updateViaCache: "none" })
+        .then((registration) => registration.update());
+    } catch (error) {
+      /* offline support is a nice-to-have; ignore registration failures */
+    }
   });
 }
