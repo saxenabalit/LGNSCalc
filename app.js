@@ -461,8 +461,11 @@ applyDefaults();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js").catch(() => {
-      /* offline support is a nice-to-have; ignore registration failures */
-    });
+    navigator.serviceWorker
+      .register("service-worker.js", { updateViaCache: "none" })
+      .then((registration) => registration.update())
+      .catch(() => {
+        /* offline support is a nice-to-have; ignore registration failures */
+      });
   });
 }
