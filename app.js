@@ -383,7 +383,7 @@ exportBtn.addEventListener("click", () => {
   const tableHeaders = [
     "Period #", "Date", "Total Cycles", "Token Balance", "Tokens Added",
     "Tokens Withdrawn", "Token Closing", "Withdraw USD", "Withdraw INR",
-    "Withdraw INR (Cum.)", "USD Value", "INR Value",
+    "Withdraw INR (Cum.)", "Closing USD", "Closing INR",
   ];
 
   function setCell(ws, row1, col1, value, numFmt) {
@@ -445,7 +445,7 @@ exportBtn.addEventListener("click", () => {
 // ------------------------------------------------------------------
 applyDefaults();
 
-const APP_VERSION = "5";
+const APP_VERSION = "6";
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
