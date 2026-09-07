@@ -164,6 +164,12 @@
           <span class="summary-value" id="cardFinalUsd">&ndash;</span>
           <span class="summary-sub" id="cardFinalUsdSub">&nbsp;</span>
         </div>
+        <div class="summary-card summary-teal">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></span>
+          <span class="summary-title">Final INR Value</span>
+          <span class="summary-value" id="cardFinalInr">&ndash;</span>
+          <span class="summary-sub" id="cardFinalInrSub">&nbsp;</span>
+        </div>
         <div class="summary-card summary-purple">
           <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
           <span class="summary-title">Growth Multiplier</span>
@@ -178,29 +184,22 @@
         </div>
       </div>
 
-      <div class="details-grid">
-        <div class="card">
-          <h3><span class="card-icon icon-blue small"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="18" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="13" y2="18"/></svg></span>Key Details</h3>
-          <div class="details-list" id="keyDetailsList"></div>
-        </div>
-
-        <div class="card">
-          <h3><span class="card-icon icon-amber small"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span>How It Works</h3>
-          <p class="how-text">
-            Compounds every cycle (4 cycles/day &mdash; 120/month or 1,460/year). Each period
-            builds on the previous period's <strong>Token Closing</strong> (after that
-            period's withdrawal). From your configured start period, <strong>Withdraw %</strong>
-            of the tokens added each period is withdrawn, converted to USD net of
-            <strong>Sales Tax</strong>, then to INR.
-          </p>
-          <div class="formula-box">
-            <div class="formula">A = P &times; (1 + r)<sup>n</sup></div>
-            <div class="formula-legend">
-              <span><b>A</b> = Final amount</span>
-              <span><b>P</b> = Principal (opening balance)</span>
-              <span><b>r</b> = Rate per cycle (decimal)</span>
-              <span><b>n</b> = Cycles this period</span>
-            </div>
+      <div class="card">
+        <h3><span class="card-icon icon-amber small"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span>How It Works</h3>
+        <p class="how-text">
+          Compounds every cycle (4 cycles/day &mdash; 120/month or 1,460/year). Each period
+          builds on the previous period's <strong>Token Closing</strong> (after that
+          period's withdrawal). From your configured start period, <strong>Withdraw %</strong>
+          of the tokens added each period is withdrawn, converted to USD net of
+          <strong>Sales Tax</strong>, then to INR.
+        </p>
+        <div class="formula-box">
+          <div class="formula">A = P &times; (1 + r)<sup>n</sup></div>
+          <div class="formula-legend">
+            <span><b>A</b> = Final amount</span>
+            <span><b>P</b> = Principal (opening balance)</span>
+            <span><b>r</b> = Rate per cycle (decimal)</span>
+            <span><b>n</b> = Cycles this period</span>
           </div>
         </div>
       </div>

@@ -510,6 +510,7 @@ body {
 
 .summary-blue { background: linear-gradient(160deg, #1d4ed8, #1e3a8a); }
 .summary-green { background: linear-gradient(160deg, #16a34a, #14532d); }
+.summary-teal { background: linear-gradient(160deg, #0d9488, #115e59); }
 .summary-purple { background: linear-gradient(160deg, #7c3aed, #4c1d95); }
 .summary-amber { background: linear-gradient(160deg, #d97706, #78350f); }
 

@@ -58,7 +58,6 @@ const exportBtn = document.getElementById("exportBtn");
 const errorBox = document.getElementById("error-box");
 const reportCard = document.getElementById("report-card");
 const resultsBody = document.getElementById("results-body");
-const keyDetailsList = document.getElementById("keyDetailsList");
 const chartContainer = document.getElementById("chart-container");
 const durationUnitLabel = document.getElementById("durationUnitLabel");
 
@@ -136,23 +135,15 @@ form.querySelectorAll('input[name="timeUnit"]').forEach((radio) => {
 // ------------------------------------------------------------------
 // Rendering
 // ------------------------------------------------------------------
-function renderKeyDetails(items) {
-  keyDetailsList.innerHTML = "";
-  for (const [label, value] of items) {
-    const row = document.createElement("div");
-    row.className = "details-row";
-    row.innerHTML = `<span class="label">${label}</span><span class="value">${value}</span>`;
-    keyDetailsList.appendChild(row);
-  }
-}
-
-function renderSummaryCards(rows, principal, tokenPrice) {
+function renderSummaryCards(rows, principal, tokenPrice, usdInrRate) {
   const lastRow = rows[rows.length - 1];
-  const [, , , , , , tokenClosing, , , cumulativeWithdrawalInr, endingUsdValue] = lastRow;
+  const [, , , , , , tokenClosing, , , cumulativeWithdrawalInr, endingUsdValue, endingInrValue] = lastRow;
 
   document.getElementById("cardFinalBalance").textContent = fmt(tokenClosing);
   document.getElementById("cardFinalUsd").textContent = `$${fmt(endingUsdValue)}`;
   document.getElementById("cardFinalUsdSub").textContent = `(at $${fmt(tokenPrice, 4)})`;
+  document.getElementById("cardFinalInr").textContent = `\u20b9${fmt(endingInrValue)}`;
+  document.getElementById("cardFinalInrSub").textContent = `(at \u20b9${fmt(usdInrRate)})`;
 
   const multiplier = principal > 0 ? tokenClosing / principal : 0;
   document.getElementById("cardGrowth").textContent = `${fmt(multiplier)}x`;
@@ -377,8 +368,7 @@ form.addEventListener("submit", (event) => {
     lastSummaryItems = summaryItems;
     lastExportRows = exportRows;
 
-    renderKeyDetails(summaryItems);
-    renderSummaryCards(exportRows, principal, tokenPrice);
+    renderSummaryCards(exportRows, principal, tokenPrice, usdInrRate);
     renderTable(exportRows);
     renderChart(exportRows, activeChartSeries);
 
