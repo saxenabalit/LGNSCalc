@@ -447,7 +447,7 @@ exportBtn.addEventListener("click", () => {
 // ------------------------------------------------------------------
 applyDefaults();
 
-const APP_VERSION = "8";
+const APP_VERSION = "9";
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {

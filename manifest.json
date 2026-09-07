@@ -1,6 +1,6 @@
 {
   "name": "LGNS Compound Investment Calculator",
-  "short_name": "LGNS Calc",
+  "short_name": "LGNSCalc",
   "description": "LGNS Dynamic Compound Investment Calculator",
   "start_url": "./index.html",
   "scope": "./",
