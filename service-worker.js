@@ -1,4 +1,4 @@
-const CACHE_NAME = "lgns-calc-v6";
+const CACHE_NAME = "lgns-calc-v7";
 const ASSETS = [
   "./",
   "./index.html",

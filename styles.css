@@ -672,34 +672,36 @@ table#results-table td:nth-child(2) {
   margin: 0;
 }
 
-.chart-toggle {
-  display: flex;
-  gap: 6px;
-  background: var(--card-bg-soft);
-  border-radius: 9px;
-  padding: 4px;
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 720px) {
+  .chart-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.chart-panel {
   border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg-soft);
+  padding: 10px 10px 6px;
+  min-width: 0;
 }
 
-.chart-toggle-btn {
-  border: none;
-  background: transparent;
+.chart-panel h3 {
+  margin: 0 0 6px 0;
+  font-size: 0.8rem;
+  font-weight: 700;
   color: var(--text-dim);
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 7px 12px;
-  border-radius: 7px;
-  cursor: pointer;
-}
-
-.chart-toggle-btn.active {
-  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-  color: #fff;
 }
 
 .chart-container {
   width: 100%;
-  min-height: 280px;
+  min-height: 180px;
 }
 
 .chart-container svg {
@@ -713,7 +715,7 @@ table#results-table td:nth-child(2) {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 280px;
+  height: 180px;
   color: var(--text-faint);
   font-size: 0.85rem;
 }
