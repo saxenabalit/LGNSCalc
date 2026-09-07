@@ -222,25 +222,14 @@
     <section class="card chart-card">
       <div class="chart-header">
         <h2><span class="card-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> Balance Growth</h2>
-      </div>
-      <div class="chart-grid">
-        <div class="chart-panel">
-          <h3>Token Closing</h3>
-          <div id="chart-closing" class="chart-container"></div>
-        </div>
-        <div class="chart-panel">
-          <h3>Closing USD</h3>
-          <div id="chart-usd" class="chart-container"></div>
-        </div>
-        <div class="chart-panel">
-          <h3>Withdraw INR (Cum.)</h3>
-          <div id="chart-withdraw-inr" class="chart-container"></div>
-        </div>
-        <div class="chart-panel">
-          <h3>Closing INR</h3>
-          <div id="chart-closing-inr" class="chart-container"></div>
+        <div class="chart-toggle">
+          <button type="button" class="chart-toggle-btn active" data-series="closing">Token Closing</button>
+          <button type="button" class="chart-toggle-btn" data-series="usd">Closing USD</button>
+          <button type="button" class="chart-toggle-btn" data-series="withdrawInr">Withdraw INR (Cum.)</button>
+          <button type="button" class="chart-toggle-btn" data-series="closingInr">Closing INR</button>
         </div>
       </div>
+      <div id="chart-container" class="chart-container"></div>
     </section>
 
   </div>
@@ -258,7 +247,7 @@
 </main>
 
 <script src="libs/xlsx.full.min.js"></script>
-<script src="calc-core.js?v=7"></script>
-<script src="app.js?v=7"></script>
+<script src="calc-core.js?v=8"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

@@ -58,16 +58,18 @@ const exportBtn = document.getElementById("exportBtn");
 const errorBox = document.getElementById("error-box");
 const reportCard = document.getElementById("report-card");
 const resultsBody = document.getElementById("results-body");
+const chartContainer = document.getElementById("chart-container");
 
-const CHART_SERIES = [
-  { id: "chart-closing", col: 6, color: "#3b82f6", fillId: "chartFillClosing" },
-  { id: "chart-usd", col: 10, color: "#22c55e", fillId: "chartFillUsd" },
-  { id: "chart-withdraw-inr", col: 9, color: "#f59e0b", fillId: "chartFillWithdrawInr" },
-  { id: "chart-closing-inr", col: 11, color: "#14b8a6", fillId: "chartFillClosingInr" },
-];
+const CHART_SERIES = {
+  closing: { col: 6, color: "#3b82f6", fillId: "chartFillClosing" },
+  usd: { col: 10, color: "#22c55e", fillId: "chartFillUsd" },
+  withdrawInr: { col: 9, color: "#f59e0b", fillId: "chartFillWithdrawInr" },
+  closingInr: { col: 11, color: "#14b8a6", fillId: "chartFillClosingInr" },
+};
 
 let lastSummaryItems = [];
 let lastExportRows = [];
+let activeChartSeries = "closing";
 let selectedDuration = DEFAULTS.duration;
 let selectedTimeUnit = "M";
 
@@ -195,8 +197,7 @@ function niceMax(value) {
   return niceNormalized * magnitude;
 }
 
-function renderChart(rows, series) {
-  const chartContainer = document.getElementById(series.id);
+function renderChart(rows, seriesKey) {
   if (!chartContainer) return;
   chartContainer.innerHTML = "";
 
@@ -208,12 +209,13 @@ function renderChart(rows, series) {
     return;
   }
 
+  const series = CHART_SERIES[seriesKey] || CHART_SERIES.closing;
   const values = rows.map((row) => row[series.col]);
   const labels = rows.map((row) => row[1]);
 
-  const width = Math.max(chartContainer.clientWidth || 280, 220);
-  const height = 200;
-  const padding = { top: 22, right: 12, bottom: 32, left: 52 };
+  const width = Math.max(chartContainer.clientWidth || 560, 320);
+  const height = 300;
+  const padding = { top: 24, right: 20, bottom: 34, left: 56 };
   const plotW = width - padding.left - padding.right;
   const plotH = height - padding.top - padding.bottom;
 
@@ -237,25 +239,25 @@ function renderChart(rows, series) {
     const val = (maxVal / gridSteps) * i;
     const y = yFor(val);
     gridLines += `<line x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" stroke="rgba(15,23,42,0.08)" stroke-width="1" />`;
-    gridLabels += `<text x="${padding.left - 8}" y="${y + 4}" text-anchor="end" font-size="9.5" fill="#64748b">${fmt(val, 0)}</text>`;
+    gridLabels += `<text x="${padding.left - 10}" y="${y + 4}" text-anchor="end" font-size="10.5" fill="#64748b">${fmt(val, 0)}</text>`;
   }
 
-  const maxTicks = Math.min(5, n);
+  const maxTicks = Math.min(7, n);
   let xLabels = "";
   for (let t = 0; t < maxTicks; t++) {
     const i = maxTicks === 1 ? 0 : Math.round((t / (maxTicks - 1)) * (n - 1));
-    xLabels += `<text x="${xFor(i)}" y="${height - padding.bottom + 18}" text-anchor="middle" font-size="9" fill="#64748b">${labels[i]}</text>`;
+    xLabels += `<text x="${xFor(i)}" y="${height - padding.bottom + 20}" text-anchor="middle" font-size="10" fill="#64748b">${labels[i]}</text>`;
   }
 
   let dots = "";
-  const dotStep = n > 24 ? Math.ceil(n / 24) : 1;
+  const dotStep = n > 30 ? Math.ceil(n / 30) : 1;
   for (let i = 0; i < n; i += dotStep) {
-    dots += `<circle cx="${xFor(i)}" cy="${yFor(values[i])}" r="2.5" fill="${lineColor}" stroke="#ffffff" stroke-width="1.5"><title>${labels[i]}: ${fmt(values[i])}</title></circle>`;
+    dots += `<circle cx="${xFor(i)}" cy="${yFor(values[i])}" r="3" fill="${lineColor}" stroke="#ffffff" stroke-width="1.5"><title>${labels[i]}: ${fmt(values[i])}</title></circle>`;
   }
   const lastI = n - 1;
-  dots += `<circle cx="${xFor(lastI)}" cy="${yFor(values[lastI])}" r="4" fill="${lineColor}" stroke="#ffffff" stroke-width="2" />`;
+  dots += `<circle cx="${xFor(lastI)}" cy="${yFor(values[lastI])}" r="4.5" fill="${lineColor}" stroke="#ffffff" stroke-width="2" />`;
 
-  const lastLabel = `<text x="${xFor(lastI)}" y="${yFor(values[lastI]) - 10}" text-anchor="end" font-size="11" font-weight="700" fill="${lineColor}">${fmt(values[lastI])}</text>`;
+  const lastLabel = `<text x="${xFor(lastI)}" y="${yFor(values[lastI]) - 12}" text-anchor="end" font-size="12" font-weight="700" fill="${lineColor}">${fmt(values[lastI])}</text>`;
 
   const svg = `
     <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet">
@@ -278,9 +280,14 @@ function renderChart(rows, series) {
   chartContainer.innerHTML = svg;
 }
 
-function renderAllCharts(rows) {
-  CHART_SERIES.forEach((series) => renderChart(rows, series));
-}
+document.querySelectorAll(".chart-toggle-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".chart-toggle-btn").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeChartSeries = btn.dataset.series;
+    renderChart(lastExportRows, activeChartSeries);
+  });
+});
 
 // ------------------------------------------------------------------
 // Main calculation handler
@@ -351,7 +358,7 @@ form.addEventListener("submit", (event) => {
 
     renderSummaryCards(exportRows, principal, tokenPrice, usdInrRate);
     renderTable(exportRows);
-    renderAllCharts(exportRows);
+    renderChart(exportRows, activeChartSeries);
 
     reportCard.hidden = false;
     reportCard.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -366,7 +373,7 @@ resetBtn.addEventListener("click", () => {
 });
 
 window.addEventListener("resize", () => {
-  if (lastExportRows.length) renderAllCharts(lastExportRows);
+  if (lastExportRows.length) renderChart(lastExportRows, activeChartSeries);
 });
 
 // ------------------------------------------------------------------
@@ -440,7 +447,7 @@ exportBtn.addEventListener("click", () => {
 // ------------------------------------------------------------------
 applyDefaults();
 
-const APP_VERSION = "7";
+const APP_VERSION = "8";
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {

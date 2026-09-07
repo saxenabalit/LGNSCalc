@@ -672,36 +672,35 @@ table#results-table td:nth-child(2) {
   margin: 0;
 }
 
-.chart-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-
-@media (min-width: 720px) {
-  .chart-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.chart-panel {
-  border: 1px solid var(--border);
-  border-radius: 12px;
+.chart-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
   background: var(--card-bg-soft);
-  padding: 10px 10px 6px;
-  min-width: 0;
+  border-radius: 9px;
+  padding: 4px;
+  border: 1px solid var(--border);
 }
 
-.chart-panel h3 {
-  margin: 0 0 6px 0;
-  font-size: 0.8rem;
-  font-weight: 700;
+.chart-toggle-btn {
+  border: none;
+  background: transparent;
   color: var(--text-dim);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 7px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.chart-toggle-btn.active {
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: #fff;
 }
 
 .chart-container {
   width: 100%;
-  min-height: 180px;
+  min-height: 280px;
 }
 
 .chart-container svg {
@@ -715,7 +714,7 @@ table#results-table td:nth-child(2) {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 180px;
+  height: 280px;
   color: var(--text-faint);
   font-size: 0.85rem;
 }
